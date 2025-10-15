@@ -1,0 +1,63 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx", "import"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": [
+        "plugin:@nx/typescript",
+        "plugin:@nx/react",
+        "next/core-web-vitals",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "plugin:react-hooks/recommended",
+        "prettier"
+      ],
+      "rules": {
+        "react/react-in-jsx-scope": "off",
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              { "sourceTag": "app", "onlyDependOnLibsWithTags": ["lib", "shared"] },
+              { "sourceTag": "lib", "onlyDependOnLibsWithTags": ["lib", "shared"] }
+            ]
+          }
+        ],
+        "import/order": [
+          "error",
+          {
+            "alphabetize": { "order": "asc", "caseInsensitive": true },
+            "groups": [["builtin", "external"], ["internal"], ["parent", "sibling", "index"]],
+            "newlines-between": "always",
+            "pathGroups": [
+              {
+                "pattern": "@/**",
+                "group": "internal",
+                "position": "before"
+              },
+              {
+                "pattern": "@ui/**",
+                "group": "internal",
+                "position": "before"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": ["builtin"],
+            "warnOnUnassignedImports": true
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.json"],
+      "extends": ["plugin:@nx/json"]
+    },
+    {
+      "files": ["*.md"],
+      "extends": ["plugin:@nx/markdown"]
+    }
+  ]
+}
