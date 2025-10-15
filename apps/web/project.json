@@ -1,0 +1,39 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "web",
+  "projectType": "application",
+  "sourceRoot": "apps/web",
+  "targets": {
+    "dev": {
+      "executor": "@nx/next:dev",
+      "options": {
+        "buildTarget": "web:build",
+        "port": 4200
+      }
+    },
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{workspaceRoot}/dist/apps/web"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/web"
+      },
+      "configurations": {
+        "development": {
+          "dev": true
+        },
+        "production": {
+          "optimization": true,
+          "generatePackageJson": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/web/**/*.{ts,tsx}"]
+      }
+    }
+  },
+  "tags": ["app"]
+}
